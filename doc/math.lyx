@@ -6315,7 +6315,7 @@ d^{c}=R_{w}^{c}\left(d^{w}+(t^{w}v^{w})v^{w}-t^{w}\right)
 \end_layout
 
 \begin_layout Section
-Line3 (Ocaml)
+Line3
 \end_layout
 
 \begin_layout Standard
@@ -6367,6 +6367,14 @@ R'=R(I+\Omega)
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Subsection
+Projecting Line3
+\end_layout
+
+\begin_layout Standard
 Projecting a line to 2D can be done easily, as both 
 \begin_inset Formula $v$
 \end_inset
@@ -6509,14 +6517,11 @@ where
 \end_inset
 
  , as before.
-\end_layout
-
-\begin_layout Subsection
-New Derivatives
+ 
 \end_layout
 
 \begin_layout Standard
-Transforming a line 
+To find the derivatives, the transformation of a line 
 \begin_inset Formula $l^{w}=(R,a,b)$
 \end_inset
 
@@ -6531,18 +6536,7 @@ Transforming a line
 , as given above, i.e., 
 \begin_inset Formula 
 \[
-f(T_{c}^{w}e^{\xihat},l^{w})=\left(\left(R_{c}^{w}\right)^{T}R,a-R_{1}^{T}t^{w},b-R_{2}^{T}t^{w}\right).
-\]
-
-\end_inset
-
- Note that
-\begin_inset Formula 
-\[
-T_{c}^{w}e^{\xihat}\approx\left[\begin{array}{cc}
-R_{c}^{w}\left(I_{3}+\Skew{\omega}\right) & t^{w}+R_{c}^{w}v\\
-0 & 1
-\end{array}\right]
+f(T_{c}^{w},l^{w})=\left(\left(R_{c}^{w}\right)^{T}R,a-R_{1}^{T}t^{w},b-R_{2}^{T}t^{w}\right).
 \]
 
 \end_inset
@@ -6567,6 +6561,17 @@ f(T_{c}^{w}e^{\xihat},l^{w}) & \approx f(T_{c}^{w},l^{w})+J_{1}\xi
 
 \end_inset
 
+Note that
+\begin_inset Formula 
+\[
+T_{c}^{w}e^{\xihat}\approx\left[\begin{array}{cc}
+R_{c}^{w}\left(I_{3}+\Skew{\omega}\right) & t^{w}+R_{c}^{w}v\\
+0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
 Let's write this out separately for each of 
 \begin_inset Formula $R,a,b$
 \end_inset
@@ -6585,8 +6590,8 @@ Simplifying, we get:
 \begin_inset Formula 
 \begin{align*}
 -\Skew{\omega}R' & \approx R'\left[J_{R\omega}\omega\right]_{\times}\\
-R_{1}^{T}R_{c}^{w} & \approx J_{av}\\
-R_{2}^{T}R_{c}^{w} & \approx J_{bv}
+-R_{1}^{T}R_{c}^{w} & \approx J_{av}\\
+-R_{2}^{T}R_{c}^{w} & \approx J_{bv}
 \end{align*}
 
 \end_inset
@@ -6608,28 +6613,6 @@ which gives the expressions for
 -\Skew{R'^{T}\omega} & \approx\left[J_{R\omega}\omega\right]_{\times}\\
 -R'^{T} & \approx J_{R\omega}
 \end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Old Derivatives
-\end_layout
-
-\begin_layout Standard
-Again, we need to redo the derivatives, as R is incremented from the right.
- The first argument is incremented from the left, but the result is incremented
- on the right:
-\begin_inset Formula 
-\begin{eqnarray*}
-R'(I+\Omega')=(AB)(I+\Omega') & = & (I+\Skew{S\omega})AB\\
-I+\Omega' & = & (AB)^{T}(I+\Skew{S\omega})(AB)\\
-\Omega' & = & R'^{T}\Skew{S\omega}R'\\
-\Omega' & = & \Skew{R'^{T}S\omega}\\
-\omega' & = & R'^{T}S\omega
-\end{eqnarray*}
 
 \end_inset
 
