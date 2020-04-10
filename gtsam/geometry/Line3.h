@@ -35,8 +35,8 @@ namespace gtsam{
  */
 class Line3 {
 private:
-    double a_, b_;  // Intersection of line with x-y world plane
     Rot3 R_;    // Rotation of line about x and y in world frame
+    double a_, b_;  // Intersection of line with x-y world plane
 
 public:
     enum {dimension = 4};

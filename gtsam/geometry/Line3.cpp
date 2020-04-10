@@ -1,4 +1,4 @@
-#include "Line3.h"
+#include <gtsam/geometry/Line3.h>
 
 namespace gtsam {
 
@@ -11,7 +11,8 @@ Vector6 Line3::points()
     Vector3 start = mid_rot + R_.r3();
     Vector3 end = mid_rot - R_.r3();
     Vector6 start_end;
-    start_end << start(0), start(1), start(2), end(0), end(1), end(2);
+    start_end << start(0), start(1), start(2),
+                    end(0), end(1), end(2);
     return start_end;
 }
 
@@ -38,35 +39,30 @@ Line3 Line3::retract(const Vector4 &v, OptionalJacobian<4,4> H) const {
 
 
 Vector4 Line3::localCoordinates(const Line3 &q, OptionalJacobian<4,4> H) const {
-    Vector3 v_ = Rot3::Logmap(R_);
-    Vector3 v_q;
-    Vector3 vnew;
+    Vector3 local_rot;
+    Vector4 local;
+    Vector2 ab_q(q.V());
     if(H)
     {
-        OptionalJacobian<3,3> Drotq;
-        v_q = Rot3::Logmap(q.R(), Drotq);
-        vnew = Rot3::Logmap(R_.inverse()*q.R(), Drotq);
-        H->block<2,2>(0, 0) = Drotq->block<2,2>(0,0);
+        OptionalJacobian<3,3> Dw;
+        local_rot = Rot3::Logmap(R_.inverse()*q.R(), Dw);
+        H->block<2,2>(0, 0) = Dw->block<2,2>(0,0);
         (*H)(2,2) = 1;
         (*H)(3,3) = 1;
     }
     else
     {
-        v_q = Rot3::Logmap(q.R());
-        vnew = Rot3::Logmap(R_.inverse()*q.R());
+        local_rot = Rot3::Logmap(R_.inverse()*q.R());
     }
-    Rot3 ref = q.R();
-    Vector4 t;
-    Vector2 ab_q(q.V());
-    t << vnew[0], vnew[1], ab_q[0] - a_, ab_q[1] - b_;
-    return t;
+    local << local_rot[0], local_rot[1], ab_q[0] - a_, ab_q[1] - b_;
+    return local;
 }
 
 
 void Line3::print(const std::string &s) const
 {
-    std::cout << s;
-    R_.print();
+    std::cout << s << std::endl;
+    R_.print("R:\n");
     std::cout << "a: " << a_ << ", b: " << b_ << std::endl;
 }
 
